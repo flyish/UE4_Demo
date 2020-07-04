@@ -20,4 +20,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static APlayerController* GetFirstPlayerController(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable)
+	static ACharacter* GetFirstPlayerCharacter(const UObject* WorldContextObject);
 };

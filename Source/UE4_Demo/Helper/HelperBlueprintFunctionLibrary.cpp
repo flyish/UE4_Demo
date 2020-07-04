@@ -8,3 +8,8 @@ APlayerController* UHelperBlueprintFunctionLibrary::GetFirstPlayerController(con
 {
 	return UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 }
+
+ACharacter* UHelperBlueprintFunctionLibrary::GetFirstPlayerCharacter(const UObject* WorldContextObject)
+{
+	return UGameplayStatics::GetPlayerCharacter(WorldContextObject, 0);
+}

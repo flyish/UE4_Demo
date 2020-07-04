@@ -4,6 +4,7 @@
 #include "UObject/UObjectGlobals.h"
 #include "Helper/HelperBlueprintFunctionLibrary.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Character.h"
 #include "Engine/World.h"
 
 // Sets default values
@@ -11,7 +12,8 @@ ACameraDirector::ACameraDirector()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
+	rotateSpeed = 180;
 }
 
 // Called when the game starts or when spawned
@@ -32,7 +34,8 @@ void ACameraDirector::BeginPlay()
 	APlayerController* pc = UHelperBlueprintFunctionLibrary::GetFirstPlayerController(this);
 	pc->SetViewTarget(cameraActorOne);
 
-	pc->InputComponent->BindAction("CameraSwitch", IE_Pressed, this, &::ACameraDirector::SwitchCamera);
+	pc->InputComponent->BindAction("CameraSwitch", IE_Pressed, this, &ACameraDirector::SwitchCamera);
+	pc->InputComponent->BindAxis("CameraRotate", this, &ACameraDirector::RotateCamera);
 }
 
 // Called every frame
@@ -48,11 +51,40 @@ void ACameraDirector::SwitchCamera()
 	
 	if (pc->GetViewTarget() == cameraActorOne)
 	{
-		pc->SetViewTarget(cameraActorTwo);
+		pc->SetViewTargetWithBlend( cameraActorTwo, 1.0f );
 	}
 	else
 	{
-		pc->SetViewTarget(cameraActorOne);
+		pc->SetViewTargetWithBlend( cameraActorOne, 1.0f );
 	}
+}
+
+void ACameraDirector::RotateCamera(float delta)
+{
+	//if (delta < 0.5 || delta > -0.5)
+	//{
+	//	return;
+	//}
+	UE_LOG(LogTemp, Warning, TEXT("rotate delta:%d"), delta);
+	FVector baseLocation;
+	// get default character
+	ACharacter* pAcharacter = UHelperBlueprintFunctionLibrary::GetFirstPlayerCharacter(this);
+	if (NULL != pAcharacter)
+	{
+		baseLocation = pAcharacter->GetActorLocation();
+	}
+
+	APlayerController* pc = UHelperBlueprintFunctionLibrary::GetFirstPlayerController(this);
+	AActor* cameraActor = pc->GetViewTarget();
+
+	FVector cameraLocation = cameraActor->GetActorLocation();
+	FVector dir = cameraLocation - baseLocation;
+	cameraLocation = baseLocation + dir;
+
+	float angle = delta * rotateSpeed * GetWorld()->DeltaTimeSeconds;
+	FRotator NewRotation = FRotator(0, angle, 0);
+	FQuat QuatRotation = FQuat(NewRotation);
+
+	cameraActor->AddActorWorldRotation(QuatRotation);
 }
 

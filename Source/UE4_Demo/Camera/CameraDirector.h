@@ -25,10 +25,14 @@ public:
 
 private:
 	void SwitchCamera();
+	void RotateCamera(float delta);
 private:
 	UPROPERTY(EditAnywhere, Category="CameraControl")
 	AActor* cameraActorOne;
 
 	UPROPERTY(EditAnywhere, Category = "CameraControl")
 	AActor* cameraActorTwo;
+
+	UPROPERTY(EditAnywhere, Category = "CameraControl")
+	float rotateSpeed;
 };
