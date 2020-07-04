@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ACameraDirector::ACameraDirector()
@@ -79,12 +80,12 @@ void ACameraDirector::RotateCamera(float delta)
 	AActor* cameraActor = pc->GetViewTarget();
 
 	float angle = delta * rotateSpeed * GetWorld()->DeltaTimeSeconds;
-	FRotator NewRotation = FRotator(0, angle, 0);
-	FQuat QuatRotation = FQuat(NewRotation);
-	cameraActor->AddActorWorldRotation(QuatRotation);
+	//FRotator NewRotation = FRotator(0, angle, 0);
+	//FQuat QuatRotation = FQuat(NewRotation);
+	//cameraActor->AddActorWorldRotation(QuatRotation);
 
 	FVector cameraLocation = cameraActor->GetActorLocation();
-	FVector dir = cameraLocation - baseLocation;
+	FVector dir = cameraLocation - baseLocation;  
 	dir = dir.RotateAngleAxis(angle, FVector(0, 0, 1));
 	FVector newLocation = baseLocation + dir;
 	cameraActor->SetActorLocation(newLocation);
@@ -92,5 +93,9 @@ void ACameraDirector::RotateCamera(float delta)
 	// draw a line
 	UWorld* pWorld_ = GetWorld();
 	DrawDebugLine(pWorld_, newLocation, baseLocation, FColor(255, 0, 0), false, 1, 0, 10);
+
+	// set camera forward to base actor
+	FRotator newRotator = UKismetMathLibrary::FindLookAtRotation(newLocation, baseLocation);
+	cameraActor->SetActorRotation(newRotator, ETeleportType::TeleportPhysics);
 }
 
