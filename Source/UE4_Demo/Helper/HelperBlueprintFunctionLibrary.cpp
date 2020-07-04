@@ -13,3 +13,8 @@ ACharacter* UHelperBlueprintFunctionLibrary::GetFirstPlayerCharacter(const UObje
 {
 	return UGameplayStatics::GetPlayerCharacter(WorldContextObject, 0);
 }
+
+APawn* UHelperBlueprintFunctionLibrary::GetFirstPlayerPawn(const UObject* WorldContextObject)
+{
+	return UGameplayStatics::GetPlayerPawn(WorldContextObject, 0);
+}

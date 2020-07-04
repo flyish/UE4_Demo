@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Character.h"
 #include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ACameraDirector::ACameraDirector()
@@ -61,30 +62,35 @@ void ACameraDirector::SwitchCamera()
 
 void ACameraDirector::RotateCamera(float delta)
 {
-	//if (delta < 0.5 || delta > -0.5)
-	//{
-	//	return;
-	//}
-	UE_LOG(LogTemp, Warning, TEXT("rotate delta:%d"), delta);
-	FVector baseLocation;
-	// get default character
-	ACharacter* pAcharacter = UHelperBlueprintFunctionLibrary::GetFirstPlayerCharacter(this);
-	if (NULL != pAcharacter)
+	if (delta < 0.5 && delta > -0.5)
 	{
-		baseLocation = pAcharacter->GetActorLocation();
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("rotate delta:%f"), delta);
+	FVector baseLocation(0, 0 ,0);
+	// get default character
+	APawn* pMainPawn = UHelperBlueprintFunctionLibrary::GetFirstPlayerPawn(this);
+	if (NULL != pMainPawn)
+	{
+		baseLocation = pMainPawn->GetActorLocation();
 	}
 
 	APlayerController* pc = UHelperBlueprintFunctionLibrary::GetFirstPlayerController(this);
 	AActor* cameraActor = pc->GetViewTarget();
 
-	FVector cameraLocation = cameraActor->GetActorLocation();
-	FVector dir = cameraLocation - baseLocation;
-	cameraLocation = baseLocation + dir;
-
 	float angle = delta * rotateSpeed * GetWorld()->DeltaTimeSeconds;
 	FRotator NewRotation = FRotator(0, angle, 0);
 	FQuat QuatRotation = FQuat(NewRotation);
-
 	cameraActor->AddActorWorldRotation(QuatRotation);
+
+	FVector cameraLocation = cameraActor->GetActorLocation();
+	FVector dir = cameraLocation - baseLocation;
+	dir = dir.RotateAngleAxis(angle, FVector(0, 0, 1));
+	FVector newLocation = baseLocation + dir;
+	cameraActor->SetActorLocation(newLocation);
+
+	// draw a line
+	UWorld* pWorld_ = GetWorld();
+	DrawDebugLine(pWorld_, newLocation, baseLocation, FColor(255, 0, 0), false, 1, 0, 10);
 }
 

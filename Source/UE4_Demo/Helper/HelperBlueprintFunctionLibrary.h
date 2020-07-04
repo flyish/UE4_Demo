@@ -23,4 +23,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static ACharacter* GetFirstPlayerCharacter(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable)
+	static APawn* GetFirstPlayerPawn(const UObject* WorldContextObject);
 };
