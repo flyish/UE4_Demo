@@ -48,6 +48,5 @@ protected:
 	AActionComponent*	m_pTarget;
 	int32				m_nFlags;
 	int32				m_nTag;
-	bool				m_bIsPaused;
 	bool				m_bIsDone;
 };
