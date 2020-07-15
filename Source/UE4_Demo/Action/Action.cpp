@@ -2,6 +2,7 @@
 
 
 #include "Action.h"
+#include "ActionComponent.h"
 
 FAction::FAction()
 	: m_pTarget( NULL )
@@ -21,14 +22,14 @@ std::string FAction::description() const
 	return "";
 }
 
-TSharedPtr<FAction> FAction::clone() const
+TSharedPtr<FAction, ESPMode::NotThreadSafe> FAction::clone() const
 {
-	return TSharedPtr<FAction>();
+	return TSharedPtr<FAction, ESPMode::NotThreadSafe>();
 }
 
-TSharedPtr<FAction> FAction::reverse() const
+TSharedPtr<FAction, ESPMode::NotThreadSafe> FAction::reverse() const
 {
-	return TSharedPtr<FAction>();
+	return TSharedPtr<FAction, ESPMode::NotThreadSafe>();
 }
 
 bool FAction::isDone() const
@@ -36,7 +37,7 @@ bool FAction::isDone() const
 	return m_bIsDone;
 }
 
-void FAction::startWithTarget(AActionComponent* target)
+void FAction::startWithTarget(UActionComponent* target)
 {
 	setTarget(target);
 }
@@ -51,12 +52,12 @@ void FAction::step(float dt)
 
 }
 
-AActionComponent* FAction::getTarget()
+UActionComponent* FAction::getTarget()
 {
 	return m_pTarget;
 }
 
-void FAction::setTarget(AActionComponent* target)
+void FAction::setTarget(UActionComponent* target)
 {
 	m_pTarget = target;
 }

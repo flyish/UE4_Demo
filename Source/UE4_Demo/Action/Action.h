@@ -2,16 +2,17 @@
 
 #pragma once
 #include <string>
-#include "CoreTypes.h"
+#include "HAL/Platform.h"
 #include "SharedPointerInternals.h"
 #include "SharedPointer.h"
 
-class AActionComponent;
+class UActionComponent;
 
 /**
  * 
  */
-class FAction : public TSharedFromThis<FAction>
+class FAction;
+class FAction : public TSharedFromThis<FAction, ESPMode::NotThreadSafe>
 {
 public:
 	FAction();
@@ -19,21 +20,21 @@ public:
 
 	virtual std::string description() const;
 
-	virtual TSharedPtr<FAction> clone() const;
+	virtual TSharedPtr<FAction, ESPMode::NotThreadSafe> clone() const;
 
-	virtual TSharedPtr<FAction> reverse() const;
+	virtual TSharedPtr<FAction, ESPMode::NotThreadSafe> reverse() const;
 
 	virtual bool isDone() const;
 
-	virtual void startWithTarget(AActionComponent* target);
+	virtual void startWithTarget(UActionComponent* target);
 
 	virtual void stop();
 
 	virtual void step(float dt);
 
-	virtual AActionComponent* getTarget();
+	virtual UActionComponent* getTarget();
 
-	void	setTarget(AActionComponent* target);
+	void	setTarget(UActionComponent* target);
 
 	int32	getTag() const;
 
@@ -45,7 +46,7 @@ public:
 
 protected:
 	std::string			m_strDesc;
-	AActionComponent*	m_pTarget;
+	UActionComponent*	m_pTarget;
 	int32				m_nFlags;
 	int32				m_nTag;
 	bool				m_bIsDone;
