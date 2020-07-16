@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Action.h"
+#include "ActionWraper.h"
 #include "ActionComponent.generated.h"
 
 
