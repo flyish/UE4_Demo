@@ -22,14 +22,14 @@ std::string FAction::description() const
 	return "";
 }
 
-TSharedPtr<FAction, ESPMode::NotThreadSafe> FAction::clone() const
+std::shared_ptr<FAction> FAction::clone() const
 {
-	return TSharedPtr<FAction, ESPMode::NotThreadSafe>();
+	return std::shared_ptr<FAction>();
 }
 
-TSharedPtr<FAction, ESPMode::NotThreadSafe> FAction::reverse() const
+std::shared_ptr<FAction> FAction::reverse() const
 {
-	return TSharedPtr<FAction, ESPMode::NotThreadSafe>();
+	return std::shared_ptr<FAction>();
 }
 
 bool FAction::isDone() const

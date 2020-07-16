@@ -10,3 +10,8 @@ FInstantAction::FInstantAction()
 FInstantAction::~FInstantAction()
 {
 }
+
+void FInstantAction::step()
+{
+	stop();
+}

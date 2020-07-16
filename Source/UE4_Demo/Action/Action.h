@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+#include <memory>
 #include "HAL/Platform.h"
 #include "SharedPointerInternals.h"
 #include "SharedPointer.h"
@@ -12,7 +13,7 @@ class UActionComponent;
  * 
  */
 class FAction;
-class FAction : public TSharedFromThis<FAction, ESPMode::NotThreadSafe>
+class FAction : public std::enable_shared_from_this<FAction>
 {
 public:
 	FAction();
@@ -20,9 +21,9 @@ public:
 
 	virtual std::string description() const;
 
-	virtual TSharedPtr<FAction, ESPMode::NotThreadSafe> clone() const;
+	virtual std::shared_ptr<FAction> clone() const;
 
-	virtual TSharedPtr<FAction, ESPMode::NotThreadSafe> reverse() const;
+	virtual std::shared_ptr<FAction> reverse() const;
 
 	virtual bool isDone() const;
 

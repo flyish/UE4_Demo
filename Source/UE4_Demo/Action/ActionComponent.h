@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Action.h"
 #include "ActionComponent.generated.h"
 
 
@@ -24,5 +25,35 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+public:
+	UFUNCTION( BlueprintCallable, Category="Action" )
+	FVector getLocation() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void	setLocation(const FVector& location);
+
+	void runAction(std::shared_ptr<FAction>& action);
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void runAction(UActionWraper* action);
+
+	void stopAction(std::shared_ptr<FAction>& action);
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void stopAction(UActionWraper* action);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void stopAllActions();
+
+	void pauseAction(std::shared_ptr<FAction>& action);
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void pauseAction(UActionWraper* action);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void pauseAllActions();
+
+	void resumeAction(std::shared_ptr<FAction>& action);
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void resumeAction(UActionWraper* action);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void resumeAllActions();
 };

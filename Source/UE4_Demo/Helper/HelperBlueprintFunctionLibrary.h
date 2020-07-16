@@ -18,12 +18,12 @@ class UE4_DEMO_API UHelperBlueprintFunctionLibrary : public UBlueprintFunctionLi
 	
 public:
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Game", meta = (WorldContext = "WorldContextObject", UnsafeDuringActorConstruction = "true"))
 	static APlayerController* GetFirstPlayerController(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Game", meta = (WorldContext = "WorldContextObject", UnsafeDuringActorConstruction = "true"))
 	static ACharacter* GetFirstPlayerCharacter(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Game", meta = (WorldContext = "WorldContextObject", UnsafeDuringActorConstruction = "true"))
 	static APawn* GetFirstPlayerPawn(const UObject* WorldContextObject);
 };

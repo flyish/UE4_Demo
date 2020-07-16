@@ -11,4 +11,6 @@ class FInstantAction : public FAction
 public:
 	FInstantAction();
 	~FInstantAction();
+
+	virtual void step();
 };
