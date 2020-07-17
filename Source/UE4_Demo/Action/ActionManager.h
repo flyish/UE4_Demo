@@ -31,6 +31,9 @@ public:
 
 	virtual std::shared_ptr<FAction> getActionByTag(int32 tag, UActionComponent* target) const;
 
+	virtual void	pauseAction(std::shared_ptr<FAction>& action);
+	virtual void	resumeAction(std::shared_ptr<FAction>& action);
+
 	virtual void 	pauseTarget(UActionComponent* target);	
 	virtual void 	resumeTarget(UActionComponent* target);
 

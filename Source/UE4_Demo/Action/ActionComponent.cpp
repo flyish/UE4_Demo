@@ -74,3 +74,101 @@ void UActionComponent::runAction(UActionWraper* action)
 	}
 }
 
+void UActionComponent::stopAction(std::shared_ptr<FAction>& action)
+{
+	//check(action->getTag() == this);
+
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->removeAction(action);
+	}
+}
+
+void UActionComponent::stopAction(UActionWraper* action)
+{
+	if (NULL != action)
+	{
+		stopAction(action->realAction());
+	}
+}
+
+void UActionComponent::stopAllActions()
+{
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->removeActionsByTarget(this);
+	}
+}
+
+void UActionComponent::pauseAction(std::shared_ptr<FAction>& action)
+{
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->pauseAction(action);
+	}
+}
+
+void UActionComponent::pauseAction(UActionWraper* action)
+{
+	if (NULL != action)
+	{
+		pauseAction(action->realAction());
+	}
+}
+
+void UActionComponent::pauseAllActions()
+{
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->pauseTarget(this);
+	}
+}
+
+void UActionComponent::resumeAction(std::shared_ptr<FAction>& action)
+{
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->resumeAction(action);
+	}
+}
+
+void UActionComponent::resumeAction(UActionWraper* action)
+{
+	if (NULL != action)
+	{
+		resumeAction(action->realAction());
+	}
+}
+
+void UActionComponent::resumeAllActions()
+{
+	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
+	verify(pGameBase_);
+
+	FActionManager* pActionManager_ = pGameBase_->actionManager();
+	if (nullptr != pActionManager_)
+	{
+		pActionManager_->resumeTarget(this);
+	}
+}
+

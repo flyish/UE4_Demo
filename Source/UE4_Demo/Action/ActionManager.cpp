@@ -82,6 +82,28 @@ std::shared_ptr<FAction> FActionManager::getActionByTag(int32 tag, UActionCompon
 	return std::shared_ptr<FAction>();
 }
 
+
+void FActionManager::pauseAction(std::shared_ptr<FAction>& action)
+{
+	ActionList::iterator itr_ = m_runActions.find(action);
+	if (itr_ != m_runActions.end())
+	{
+		m_runActions.erase(itr_);
+		m_pausedList.insert(action);
+	}
+}
+
+
+void FActionManager::resumeAction(std::shared_ptr<FAction>& action)
+{
+	ActionList::iterator itr_ = m_pausedList.find(action);
+	if (itr_ != m_pausedList.end())
+	{
+		m_pausedList.erase(itr_);
+		m_runActions.insert(action);
+	}
+}
+
 void FActionManager::pauseTarget(UActionComponent* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
