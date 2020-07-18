@@ -13,6 +13,6 @@ public:
 	~FMoveByAction();
 
 
-	virtual void startWithTarget(UActionComponent* target);
+	virtual void startWithTarget(IActionNode* target);
 	virtual void setTargetPosition(const FVector& v);
 };

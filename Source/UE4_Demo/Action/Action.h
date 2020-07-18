@@ -7,7 +7,7 @@
 #include "SharedPointerInternals.h"
 #include "SharedPointer.h"
 
-class UActionComponent;
+class IActionNode;
 
 /**
  * 
@@ -27,15 +27,15 @@ public:
 
 	virtual bool isDone() const;
 
-	virtual void startWithTarget(UActionComponent* target);
+	virtual void startWithTarget(IActionNode* target);
 
 	virtual void stop();
 
 	virtual void step(float dt);
 
-	virtual UActionComponent* getTarget();
+	virtual IActionNode* getTarget();
 
-	void	setTarget(UActionComponent* target);
+	void	setTarget(IActionNode* target);
 
 	int32	getTag() const;
 
@@ -47,7 +47,7 @@ public:
 
 protected:
 	std::string			m_strDesc;
-	UActionComponent*	m_pTarget;
+	IActionNode*	m_pTarget;
 	int32				m_nFlags;
 	int32				m_nTag;
 	bool				m_bIsDone;

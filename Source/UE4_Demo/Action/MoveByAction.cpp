@@ -15,7 +15,7 @@ FMoveByAction::~FMoveByAction()
 }
 
 
-void FMoveByAction::startWithTarget(UActionComponent* target)
+void FMoveByAction::startWithTarget(IActionNode* target)
 {
 	FMoveToAction::startWithTarget(target);
 

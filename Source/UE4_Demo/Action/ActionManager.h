@@ -5,7 +5,7 @@
 #include <set>
 
 class FAction;
-class UActionComponent;
+class IActionNode;
 
 /**
  * 
@@ -22,20 +22,20 @@ public:
 	FActionManager();
 	virtual ~FActionManager();
 
-	virtual void addAction(std::shared_ptr<FAction>& action, UActionComponent* target, bool paused = false);
+	virtual void addAction(std::shared_ptr<FAction>& action, IActionNode* target, bool paused = false);
 	virtual void removeAction(std::shared_ptr<FAction>& action);
-	virtual void removeActionsByTarget(UActionComponent* target);
+	virtual void removeActionsByTarget(IActionNode* target);
 	virtual void removeAllActions();
-	virtual void removeActionsByTag(int32 tag, UActionComponent* target);
-	virtual void removeActionsByFlags(int32 flags, UActionComponent* target);
+	virtual void removeActionsByTag(int32 tag, IActionNode* target);
+	virtual void removeActionsByFlags(int32 flags, IActionNode* target);
 
-	virtual std::shared_ptr<FAction> getActionByTag(int32 tag, UActionComponent* target) const;
+	virtual std::shared_ptr<FAction> getActionByTag(int32 tag, IActionNode* target) const;
 
 	virtual void	pauseAction(std::shared_ptr<FAction>& action);
 	virtual void	resumeAction(std::shared_ptr<FAction>& action);
 
-	virtual void 	pauseTarget(UActionComponent* target);	
-	virtual void 	resumeTarget(UActionComponent* target);
+	virtual void 	pauseTarget(IActionNode* target);	
+	virtual void 	resumeTarget(IActionNode* target);
 
 	virtual void 	pauseAllActions();
 	virtual void 	resumeAllActions();

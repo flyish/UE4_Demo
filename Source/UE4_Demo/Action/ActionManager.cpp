@@ -2,7 +2,6 @@
 
 
 #include "ActionManager.h"
-#include "ActionComponent.h"
 #include "Action.h"
 
 FActionManager::FActionManager()
@@ -15,7 +14,7 @@ FActionManager::~FActionManager()
 	m_pausedList.clear();
 }
 
-void FActionManager::addAction(std::shared_ptr<FAction>& action, UActionComponent* target, bool paused)
+void FActionManager::addAction(std::shared_ptr<FAction>& action, IActionNode* target, bool paused)
 {
 	action->startWithTarget(target);
 
@@ -35,7 +34,7 @@ void FActionManager::removeAction(std::shared_ptr<FAction>& action)
 	m_pausedList.erase(action);
 }
 
-void FActionManager::removeActionsByTarget(UActionComponent* target)
+void FActionManager::removeActionsByTarget(IActionNode* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
 		return a->getTarget() == target;
@@ -50,7 +49,7 @@ void FActionManager::removeAllActions()
 	m_pausedList.clear();
 }
 
-void FActionManager::removeActionsByTag(int32 tag, UActionComponent* target)
+void FActionManager::removeActionsByTag(int32 tag, IActionNode* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
 		return a->getTarget() == target && a->getTag() == tag;
@@ -59,7 +58,7 @@ void FActionManager::removeActionsByTag(int32 tag, UActionComponent* target)
 	_removeActions(m_pausedList, nullptr, pf);
 }
 
-void FActionManager::removeActionsByFlags(int32 flags, UActionComponent* target)
+void FActionManager::removeActionsByFlags(int32 flags, IActionNode* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
 		return a->getTarget() == target && a->getFlags() == flags;
@@ -68,7 +67,7 @@ void FActionManager::removeActionsByFlags(int32 flags, UActionComponent* target)
 	_removeActions(m_pausedList, nullptr, pf);
 }
 
-std::shared_ptr<FAction> FActionManager::getActionByTag(int32 tag, UActionComponent* target) const
+std::shared_ptr<FAction> FActionManager::getActionByTag(int32 tag, IActionNode* target) const
 {
 	for (ActionList::iterator itr_ = m_runActions.begin(); itr_ != m_runActions.end(); ++itr_)
 	{
@@ -104,7 +103,7 @@ void FActionManager::resumeAction(std::shared_ptr<FAction>& action)
 	}
 }
 
-void FActionManager::pauseTarget(UActionComponent* target)
+void FActionManager::pauseTarget(IActionNode* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
 		return a->getTarget() == target;
@@ -115,7 +114,7 @@ void FActionManager::pauseTarget(UActionComponent* target)
 	m_pausedList.insert(removed.begin(), removed.end());
 }
 
-void FActionManager::resumeTarget(UActionComponent* target)
+void FActionManager::resumeTarget(IActionNode* target)
 {
 	RemoveChecker pf = [&](const std::shared_ptr<FAction>& a)->bool {
 		return a->getTarget() == target;

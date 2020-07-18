@@ -2,7 +2,6 @@
 
 
 #include "Action.h"
-#include "ActionComponent.h"
 
 FAction::FAction()
 	: m_pTarget( NULL )
@@ -37,7 +36,7 @@ bool FAction::isDone() const
 	return m_bIsDone;
 }
 
-void FAction::startWithTarget(UActionComponent* target)
+void FAction::startWithTarget(IActionNode* target)
 {
 	setTarget(target);
 }
@@ -52,12 +51,12 @@ void FAction::step(float dt)
 
 }
 
-UActionComponent* FAction::getTarget()
+IActionNode* FAction::getTarget()
 {
 	return m_pTarget;
 }
 
-void FAction::setTarget(UActionComponent* target)
+void FAction::setTarget(IActionNode* target)
 {
 	m_pTarget = target;
 }

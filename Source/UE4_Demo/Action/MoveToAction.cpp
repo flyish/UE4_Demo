@@ -2,7 +2,7 @@
 
 
 #include "MoveToAction.h"
-#include "ActionComponent.h"
+#include "IActionNode.h"
 
 FMoveToAction::FMoveToAction(const FVector& targetPosition /*= FVector()*/, float duration/* = 1.0*/)
 	: FIntvalAction( duration )
@@ -16,7 +16,7 @@ FMoveToAction::~FMoveToAction()
 }
 
 
-void FMoveToAction::startWithTarget(UActionComponent* target)
+void FMoveToAction::startWithTarget(IActionNode* target)
 {
 	FIntvalAction::startWithTarget(target);
 

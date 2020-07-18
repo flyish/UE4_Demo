@@ -6,11 +6,12 @@
 #include "Components/ActorComponent.h"
 #include "Action.h"
 #include "ActionWraper.h"
+#include "IActionNode.h"
 #include "ActionComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class UE4_DEMO_API UActionComponent : public UActorComponent
+class UE4_DEMO_API UActionComponent : public UActorComponent, public IActionNode
 {
 	GENERATED_BODY()
 

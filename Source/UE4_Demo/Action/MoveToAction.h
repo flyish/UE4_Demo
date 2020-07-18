@@ -17,7 +17,7 @@ public:
 	FMoveToAction(const FVector& targetPosition = FVector(), float duration = 1.0 );
 	~FMoveToAction();
 
-	virtual void startWithTarget(UActionComponent* target);
+	virtual void startWithTarget(IActionNode* target);
 	virtual void step(float dt);
 
 	virtual void setTargetPosition(const FVector& v);
