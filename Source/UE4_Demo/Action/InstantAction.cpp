@@ -11,7 +11,7 @@ FInstantAction::~FInstantAction()
 {
 }
 
-void FInstantAction::step()
+void FInstantAction::step(float dt)
 {
 	stop();
 }

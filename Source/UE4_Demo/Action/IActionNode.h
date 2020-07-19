@@ -15,17 +15,21 @@ public:
 
 	virtual void	setLocation(const FVector& location) = 0;
 
-	virtual void runAction(std::shared_ptr<FAction>& action) = 0;
+	virtual FVector	getScale() const = 0;
 
-	virtual void stopAction(std::shared_ptr<FAction>& action) = 0;
+	virtual void	setScale(FVector s) = 0;
+
+	virtual void runAction(const std::shared_ptr<FAction>& action) = 0;
+
+	virtual void stopAction(const std::shared_ptr<FAction>& action) = 0;
 
 	virtual void stopAllActions() = 0;
 
-	virtual void pauseAction(std::shared_ptr<FAction>& action) = 0;
+	virtual void pauseAction(const std::shared_ptr<FAction>& action) = 0;
 
 	virtual void pauseAllActions() = 0;
 
-	virtual void resumeAction(std::shared_ptr<FAction>& action) = 0;
+	virtual void resumeAction(const std::shared_ptr<FAction>& action) = 0;
 
 	virtual void resumeAllActions() = 0;
 };

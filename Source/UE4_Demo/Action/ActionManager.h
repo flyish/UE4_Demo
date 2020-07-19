@@ -22,8 +22,8 @@ public:
 	FActionManager();
 	virtual ~FActionManager();
 
-	virtual void addAction(std::shared_ptr<FAction>& action, IActionNode* target, bool paused = false);
-	virtual void removeAction(std::shared_ptr<FAction>& action);
+	virtual void addAction(const std::shared_ptr<FAction>& action, IActionNode* target, bool paused = false);
+	virtual void removeAction(const std::shared_ptr<FAction>& action);
 	virtual void removeActionsByTarget(IActionNode* target);
 	virtual void removeAllActions();
 	virtual void removeActionsByTag(int32 tag, IActionNode* target);
@@ -31,8 +31,8 @@ public:
 
 	virtual std::shared_ptr<FAction> getActionByTag(int32 tag, IActionNode* target) const;
 
-	virtual void	pauseAction(std::shared_ptr<FAction>& action);
-	virtual void	resumeAction(std::shared_ptr<FAction>& action);
+	virtual void	pauseAction(const std::shared_ptr<FAction>& action);
+	virtual void	resumeAction(const std::shared_ptr<FAction>& action);
 
 	virtual void 	pauseTarget(IActionNode* target);	
 	virtual void 	resumeTarget(IActionNode* target);

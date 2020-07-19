@@ -14,7 +14,7 @@ FActionManager::~FActionManager()
 	m_pausedList.clear();
 }
 
-void FActionManager::addAction(std::shared_ptr<FAction>& action, IActionNode* target, bool paused)
+void FActionManager::addAction(const std::shared_ptr<FAction>& action, IActionNode* target, bool paused)
 {
 	action->startWithTarget(target);
 
@@ -28,7 +28,7 @@ void FActionManager::addAction(std::shared_ptr<FAction>& action, IActionNode* ta
 	}
 }
 
-void FActionManager::removeAction(std::shared_ptr<FAction>& action)
+void FActionManager::removeAction(const std::shared_ptr<FAction>& action)
 {
 	m_runActions.erase(action);
 	m_pausedList.erase(action);
@@ -82,7 +82,7 @@ std::shared_ptr<FAction> FActionManager::getActionByTag(int32 tag, IActionNode* 
 }
 
 
-void FActionManager::pauseAction(std::shared_ptr<FAction>& action)
+void FActionManager::pauseAction(const std::shared_ptr<FAction>& action)
 {
 	ActionList::iterator itr_ = m_runActions.find(action);
 	if (itr_ != m_runActions.end())
@@ -93,7 +93,7 @@ void FActionManager::pauseAction(std::shared_ptr<FAction>& action)
 }
 
 
-void FActionManager::resumeAction(std::shared_ptr<FAction>& action)
+void FActionManager::resumeAction(const std::shared_ptr<FAction>& action)
 {
 	ActionList::iterator itr_ = m_pausedList.find(action);
 	if (itr_ != m_pausedList.end())

@@ -54,7 +54,27 @@ void UActionComponent::setLocation(const FVector& location)
 	}
 }
 
-void UActionComponent::runAction(std::shared_ptr<FAction>& action)
+FVector UActionComponent::getScale() const
+{
+	AActor* pOwner_ = GetOwner();
+	if (nullptr != pOwner_)
+	{
+		return pOwner_->GetActorScale();
+	}
+
+	return FVector(1.0, 1.0, 1.0);
+}
+
+void UActionComponent::setScale(FVector s)
+{
+	AActor* pOwner_ = GetOwner();
+	if (nullptr != pOwner_)
+	{
+		pOwner_->SetActorScale3D(s);
+	}
+}
+
+void UActionComponent::runAction(const std::shared_ptr<FAction>& action)
 {
 	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(	 UGameplayStatics::GetGameMode(this->GetOwner()) );
 	verify(pGameBase_);
@@ -74,7 +94,7 @@ void UActionComponent::runAction(UActionWraper* action)
 	}
 }
 
-void UActionComponent::stopAction(std::shared_ptr<FAction>& action)
+void UActionComponent::stopAction(const std::shared_ptr<FAction>& action)
 {
 	//check(action->getTag() == this);
 
@@ -108,7 +128,7 @@ void UActionComponent::stopAllActions()
 	}
 }
 
-void UActionComponent::pauseAction(std::shared_ptr<FAction>& action)
+void UActionComponent::pauseAction(const std::shared_ptr<FAction>& action)
 {
 	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
 	verify(pGameBase_);
@@ -140,7 +160,7 @@ void UActionComponent::pauseAllActions()
 	}
 }
 
-void UActionComponent::resumeAction(std::shared_ptr<FAction>& action)
+void UActionComponent::resumeAction(const std::shared_ptr<FAction>& action)
 {
 	AUE4_DemoGameModeBase* pGameBase_ = Cast<AUE4_DemoGameModeBase>(UGameplayStatics::GetGameMode(this->GetOwner()));
 	verify(pGameBase_);
