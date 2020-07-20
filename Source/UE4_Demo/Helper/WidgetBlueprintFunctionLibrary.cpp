@@ -6,7 +6,7 @@
 #include "../UE4_DemoGameModeBase.h"
 #include "../Widgets/UserWidgetsManager.h"
 
-void UWidgetBlueprintFunctionLibrary::showWidget(const FName& path, uint8 showType, const FName& associatedName, bool create /*= true*/)
+void UWidgetBlueprintFunctionLibrary::showWidget(const FString& path, uint8 showType, const FString& associatedName, bool create /*= true*/)
 {
 	UUserWidgetsManager* pWidgetManager_ = widgetsManager();
 	if (nullptr != pWidgetManager_)
@@ -15,7 +15,7 @@ void UWidgetBlueprintFunctionLibrary::showWidget(const FName& path, uint8 showTy
 	}
 }
 
-void UWidgetBlueprintFunctionLibrary::hideWidget(const FName& path, uint8 hideType)
+void UWidgetBlueprintFunctionLibrary::hideWidget(const FString& path, uint8 hideType)
 {
 	UUserWidgetsManager* pWidgetManager_ = widgetsManager();
 	if (nullptr != pWidgetManager_)

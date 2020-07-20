@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "../Widgets/UserWidgetPanel.h"
-#include "NameTypes.h"
 #include "WidgetBlueprintFunctionLibrary.generated.h"
 
 /**
@@ -18,9 +17,9 @@ class UE4_DEMO_API UWidgetBlueprintFunctionLibrary : public UBlueprintFunctionLi
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	static void showWidget(const FName& path, uint8 showType, const FName& associatedName, bool create = true);
+	static void showWidget(const FString& path, uint8 showType, const FString& associatedName, bool create = true);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	static void hideWidget(const FName& path, uint8 hideType);
+	static void hideWidget(const FString& path, uint8 hideType);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
 	static UUserWidgetsManager* widgetsManager();
 };

@@ -7,7 +7,6 @@
 #include "../Action/IActionNode.h"
 #include "../Action/ActionWraper.h"
 #include "Delegate.h"
-#include "NameTypes.h"
 #include "UserWidgetPanel.generated.h"
 
 UENUM()
@@ -40,9 +39,9 @@ public:
 	DECLARE_DYNAMIC_DELEGATE_TwoParams(FUserPanelDelegate, UUserWidgetPanel*, Panel, uint8, type);
 protected:
 	UPROPERTY(EditAnywhere, Category = "Panel Property")
-	FName m_selfName;
+	FString m_selFString;
 	UPROPERTY(EditAnywhere, Category = "Panel Property")
-	FName m_associatedName;
+	FString m_associatedName;
 	UPROPERTY(EditAnywhere, Category = "Panel Property")
 	int32	m_panelGroup;
 	UPROPERTY(EditAnywhere, Category = "Panel Property")
@@ -82,14 +81,14 @@ public:
 	void Show(uint8 showType);
 	virtual void Show_Implementation(uint8 showType);
 	UFUNCTION(BlueprintNativeEvent, Category = "Panel")
-	void ShowByAssociated(uint8 showType, const FName& associatedName);
-	virtual void ShowByAssociated_Implementation(uint8 showType, const FName& associatedName);
+	void ShowByAssociated(uint8 showType, const FString& associatedName);
+	virtual void ShowByAssociated_Implementation(uint8 showType, const FString& associatedName);
 	UFUNCTION(BlueprintNativeEvent, Category = "Panel")
 	void Hide(uint8 hideType);
 	virtual void Hide_Implementation(uint8 hideType);
 
 protected:
-	virtual void InnerShow(uint8 showType, const FName& associatedName);
+	virtual void InnerShow(uint8 showType, const FString& associatedName);
 	UFUNCTION(BlueprintCallable, Category = "Panel")
 	void onShow( uint8 showType );
 	UFUNCTION(BlueprintCallable, Category = "Panel")
@@ -103,12 +102,12 @@ public:
 	//------------------------------------------
 	// helper
 	//------------------------------------------
+	UFUNCTION(BlueprintCallable, Category = "Panel")
+	void setPanelName( const FString& name );
 	UFUNCTION(BlueprintPure, Category = "Panel")
-	void setPanelName( const FName& name );
+	const FString& getPanelName() const;
 	UFUNCTION(BlueprintPure, Category = "Panel")
-	const FName& getPanelName() const;
-	UFUNCTION(BlueprintPure, Category = "Panel")
-	const FName& getAssociatedName() const;
+	const FString& getAssociatedName() const;
 	UFUNCTION(BlueprintPure, Category = "Panel")
 	int32 getCatalog() const;
 	UFUNCTION(BlueprintPure, Category = "Panel")

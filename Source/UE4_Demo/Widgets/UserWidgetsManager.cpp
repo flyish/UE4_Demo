@@ -5,23 +5,30 @@
 #include "UserWidgetPanel.h"
 #include "ConstructorHelpers.h"
 
-void UUserWidgetsManager::showWidget(const FName& path, uint8 showType, const FName& associatedName, bool create /*= true*/)
+UUserWidgetPanel* UUserWidgetsManager::createWidget(const FString& path)
+{
+	UUserWidgetPanel* pPanel_ = nullptr;
+	ConstructorHelpers::FObjectFinder<UUserWidgetPanel> finder(*path);
+	if (finder.Succeeded())
+	{
+		pPanel_ = finder.Object;
+		pPanel_->setPanelName(path);
+		addWidget(path, pPanel_);
+	}
+	return pPanel_;
+}
+
+void UUserWidgetsManager::showWidget(const FString& path, uint8 showType, const FString& associatedName, bool create /*= true*/)
 {
 	UUserWidgetPanel* pPanel_ = findWidget(path);
 	if (NULL == pPanel_ && create)
 	{
-		const FString& s = path.ToString();
-		ConstructorHelpers::FObjectFinder<UUserWidgetPanel> finder( *s );
-		if (finder.Succeeded())
-		{
-			pPanel_ = finder.Object;
-			pPanel_->setPanelName(path);
-		}
+		pPanel_ = createWidget(path);
 	}
 
 	if (nullptr != pPanel_)
 	{
-		if (associatedName.IsNone())
+		if ( associatedName.IsEmpty() )
 		{
 			pPanel_->Show(showType);
 		}
@@ -32,7 +39,7 @@ void UUserWidgetsManager::showWidget(const FName& path, uint8 showType, const FN
 	}
 }
 
-void UUserWidgetsManager::hideWidget( const FName& path, uint8 hideType)
+void UUserWidgetsManager::hideWidget( const FString& path, uint8 hideType)
 {
 	UUserWidgetPanel* pPanel_ = findWidget(path);
 	if ( NULL != pPanel_ )
@@ -41,12 +48,18 @@ void UUserWidgetsManager::hideWidget( const FName& path, uint8 hideType)
 	}
 }
 
-void UUserWidgetsManager::removeWidget(const FName& path)
+bool UUserWidgetsManager::addWidget(const FString& path, UUserWidgetPanel* pWidgetPanel)
+{
+	m_widgets.Add(path, pWidgetPanel);
+	return true;
+}
+
+void UUserWidgetsManager::removeWidget(const FString& path)
 {
 	m_widgets.Remove(path);
 }
 
-UUserWidgetPanel* UUserWidgetsManager::findWidget(const FName& path)
+UUserWidgetPanel* UUserWidgetsManager::findWidget(const FString& path)
 {
 	UUserWidgetPanel** ppWidget = m_widgets.Find(path);
 	if (nullptr != ppWidget)

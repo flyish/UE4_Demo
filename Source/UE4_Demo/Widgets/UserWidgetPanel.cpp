@@ -38,11 +38,11 @@ void UUserWidgetPanel::onDestory_Implementation()
 
 void UUserWidgetPanel::Show_Implementation(uint8 showType)
 {
-	InnerShow(showType, FName());
+	InnerShow(showType, FString());
 }
 
 
-void UUserWidgetPanel::ShowByAssociated_Implementation(uint8 showType, const FName& associatedName)
+void UUserWidgetPanel::ShowByAssociated_Implementation(uint8 showType, const FString& associatedName)
 {
 	InnerShow(showType, associatedName);
 }
@@ -72,7 +72,7 @@ void UUserWidgetPanel::Hide_Implementation(uint8 hideType)
 	this->runAction(sequenceAction_->shared_from_this());
 }
 
-void UUserWidgetPanel::InnerShow(uint8 showType, const FName& associatedName)
+void UUserWidgetPanel::InnerShow(uint8 showType, const FString& associatedName)
 {
 	if (EPanelShowType(showType) != EPanelShowType::E_PANEL_SHOW_RESTORE)
 	{
@@ -86,7 +86,7 @@ void UUserWidgetPanel::InnerShow(uint8 showType, const FName& associatedName)
 		{
 			UUserWidgetsManager* widgetsManager_ = UWidgetBlueprintFunctionLibrary::widgetsManager();
 			TArray<UUserWidgetPanel*> assoicateds;
-			if (m_associatedName.IsValid())
+			if (m_associatedName.IsEmpty())
 			{
 				UUserWidgetPanel* pAssoicatedPanel_ = widgetsManager_->findWidget(m_associatedName);
 				if (nullptr != pAssoicatedPanel_)
@@ -165,24 +165,24 @@ void UUserWidgetPanel::onFinishHide(void* pContext)
 	UUserWidgetsManager* widgetManager_ = UWidgetBlueprintFunctionLibrary::widgetsManager();
 	if (hideType_ == (uint8)EPanelHideType::E_PANEL_HIDE_CLOSE)
 	{
-		widgetManager_->removeWidget(m_selfName);
+		widgetManager_->removeWidget(m_selFString);
 	}
 	RemoveFromViewport();
 }
 
-void UUserWidgetPanel::setPanelName(const FName& name)
+void UUserWidgetPanel::setPanelName(const FString& name)
 {
-	m_selfName = name;
+	m_selFString = name;
 }
 
-const FName& UUserWidgetPanel::getAssociatedName() const
+const FString& UUserWidgetPanel::getAssociatedName() const
 {
 	return m_associatedName;
 }
 
-const FName& UUserWidgetPanel::getPanelName() const
+const FString& UUserWidgetPanel::getPanelName() const
 {
-	return m_selfName;
+	return m_selFString;
 }
 
 int32 UUserWidgetPanel::getCatalog() const

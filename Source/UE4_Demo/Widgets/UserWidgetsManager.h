@@ -18,17 +18,21 @@ class UE4_DEMO_API UUserWidgetsManager : public UObject
 	GENERATED_BODY()
 	
 private:
-	TMap<FName, UUserWidgetPanel*> m_widgets;
+	TMap<FString, UUserWidgetPanel*> m_widgets;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	void showWidget(const FName& path, uint8 showType, const FName& associatedName, bool create = true);
+	UUserWidgetPanel* createWidget(const FString& path);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	void hideWidget(const FName& path, uint8 hideType);
+	void showWidget(const FString& path, uint8 showType, const FString& associatedName, bool create = true);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	void removeWidget(const FName& path);
+	void hideWidget(const FString& path, uint8 hideType);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	UUserWidgetPanel* findWidget(const FName& path);
+	bool addWidget(const FString& path, UUserWidgetPanel* pWidgetPanel);
+	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
+	void removeWidget(const FString& path);
+	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
+	UUserWidgetPanel* findWidget(const FString& path);
 	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
 	int32 findWidgets(int32 catalog, TArray<UUserWidgetPanel*>& widgets);
 };

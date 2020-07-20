@@ -6,6 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ObjectMacros.h"
 #include "GameFramework/Actor.h"
+#include "../Tester/TesterController.h"
 #include "HelperBlueprintFunctionLibrary.generated.h"
 
 /**
@@ -26,4 +27,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Game", meta = (WorldContext = "WorldContextObject", UnsafeDuringActorConstruction = "true"))
 	static APawn* GetFirstPlayerPawn(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Tester Controller")
+	static UTesterController* testerController();
 };
